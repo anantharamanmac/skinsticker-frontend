@@ -2,16 +2,18 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import API from '../services/api';
 import { useAuth } from '../context/AuthContext';
-import { useToast } from '../context/ToastContext'; // ✅ Import toast
-import { Form, Button, Container, Card } from 'react-bootstrap';
+import { useToast } from '../context/ToastContext';
+import { Form, Button, Container, Card, InputGroup } from 'react-bootstrap';
+import { Eye, EyeSlash } from 'react-bootstrap-icons'; // ✅ Eye icons
 
 const Login = () => {
   const { login } = useAuth();
-  const { showToast } = useToast(); // ✅ Use toast
+  const { showToast } = useToast();
   const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false); // ✅ New state
   const [loading, setLoading] = useState(false);
 
   const handleLogin = async (e) => {
@@ -20,10 +22,10 @@ const Login = () => {
     try {
       const res = await API.post('/users/login', { email, password });
       login(res.data.user);
-      showToast('Login successful!', 'success'); // ✅ Toast on success
+      showToast('Login successful!', 'success');
       navigate('/');
     } catch (err) {
-      showToast(err.response?.data?.message || 'Login failed', 'danger'); // ✅ Toast on error
+      showToast(err.response?.data?.message || 'Login failed', 'danger');
     } finally {
       setLoading(false);
     }
@@ -47,13 +49,22 @@ const Login = () => {
 
           <Form.Group controlId="formPassword" className="mb-3">
             <Form.Label>Password</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+            <InputGroup>
+              <Form.Control
+                type={showPassword ? 'text' : 'password'}
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <Button
+                variant="outline-secondary"
+                onClick={() => setShowPassword(!showPassword)}
+                tabIndex={-1}
+              >
+                {showPassword ? <EyeSlash /> : <Eye />}
+              </Button>
+            </InputGroup>
           </Form.Group>
 
           <div className="d-flex justify-content-between align-items-center mb-3">
