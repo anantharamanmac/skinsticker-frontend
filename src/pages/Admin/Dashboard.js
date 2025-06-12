@@ -1,47 +1,38 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { BoxSeam, PeopleFill, ClipboardCheck } from 'react-bootstrap-icons';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import './Dashboard.css'; // ✅ Custom CSS import
 
 const Dashboard = () => {
   const menuItems = [
     {
       title: 'Manage Products',
       to: '/admin/products',
-      icon: <BoxSeam size={24} className="me-2" />,
-      bg: 'primary',
+      icon: <BoxSeam size={26} className="me-2" />,
     },
     {
       title: 'Manage Users',
       to: '/admin/users',
-      icon: <PeopleFill size={24} className="me-2" />,
-      bg: 'success',
+      icon: <PeopleFill size={26} className="me-2" />,
     },
     {
       title: 'Approve Orders',
       to: '/admin/orders',
-      icon: <ClipboardCheck size={24} className="me-2" />,
-      bg: 'purple',
+      icon: <ClipboardCheck size={26} className="me-2" />,
     },
   ];
 
   return (
-    <div className="container py-5">
-      <h2 className="text-center fw-bold mb-5">Admin Dashboard</h2>
-      <div className="row g-4">
+    <div className="admin-dashboard-container">
+      <h2 className="dashboard-title">Admin Dashboard</h2>
+      <div className="dashboard-grid">
         {menuItems.map((item, index) => (
-          <div key={index} className="col-md-4">
-            <Link to={item.to} className="text-decoration-none">
-              <div
-                className={`card text-white bg-${item.bg} h-100 shadow-sm border-0 hover-scale`}
-              >
-                <div className="card-body d-flex align-items-center justify-content-center">
-                  {item.icon}
-                  <h5 className="card-title m-0">{item.title}</h5>
-                </div>
-              </div>
-            </Link>
-          </div>
+          <Link to={item.to} key={index} className="dashboard-card-link">
+            <div className="dashboard-card">
+              {item.icon}
+              <span>{item.title}</span>
+            </div>
+          </Link>
         ))}
       </div>
     </div>
