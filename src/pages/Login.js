@@ -1,0 +1,78 @@
+import React, { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import API from '../services/api';
+import { useAuth } from '../context/AuthContext';
+import { useToast } from '../context/ToastContext'; // ✅ Import toast
+import { Form, Button, Container, Card } from 'react-bootstrap';
+
+const Login = () => {
+  const { login } = useAuth();
+  const { showToast } = useToast(); // ✅ Use toast
+  const navigate = useNavigate();
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const res = await API.post('/users/login', { email, password });
+      login(res.data.user);
+      showToast('Login successful!', 'success'); // ✅ Toast on success
+      navigate('/');
+    } catch (err) {
+      showToast(err.response?.data?.message || 'Login failed', 'danger'); // ✅ Toast on error
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <Container className="d-flex justify-content-center align-items-center vh-100">
+      <Card style={{ width: '100%', maxWidth: '400px' }} className="p-4 shadow-sm">
+        <h3 className="text-center mb-4">Sign In</h3>
+        <Form onSubmit={handleLogin}>
+          <Form.Group controlId="formEmail" className="mb-3">
+            <Form.Label>Email address</Form.Label>
+            <Form.Control
+              type="email"
+              placeholder="Enter email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </Form.Group>
+
+          <Form.Group controlId="formPassword" className="mb-3">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </Form.Group>
+
+          <div className="d-flex justify-content-between align-items-center mb-3">
+            <Link to="/forgot-password" className="text-decoration-none">Forgot password?</Link>
+            <Link to="/register" className="text-decoration-none">Register</Link>
+          </div>
+
+          <Button
+            variant="primary"
+            type="submit"
+            className="w-100"
+            disabled={loading}
+          >
+            {loading ? 'Logging in...' : 'Login'}
+          </Button>
+        </Form>
+      </Card>
+    </Container>
+  );
+};
+
+export default Login;

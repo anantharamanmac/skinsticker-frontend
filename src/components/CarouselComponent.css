@@ -1,0 +1,13 @@
+.carousel-wrapper {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  overflow: hidden;
+}
+
+.carousel-image {
+  height: 300px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 8px;
+}
