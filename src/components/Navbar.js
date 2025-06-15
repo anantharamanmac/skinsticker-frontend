@@ -53,7 +53,7 @@ const NavigationBar = () => {
               </>
             ) : (
               <>
-                {user?.role === 'admin' && (
+                {user?.isAdmin && (
                   <NavDropdown title="Admin" align="end" className="me-2">
                     <NavDropdown.Item as={Link} to="/admin/dashboard">Dashboard</NavDropdown.Item>
                     <NavDropdown.Item as={Link} to="/admin/products">Products</NavDropdown.Item>

@@ -16,20 +16,23 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false); // ✅ New state
   const [loading, setLoading] = useState(false);
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      const res = await API.post('/users/login', { email, password });
-      login(res.data.user);
-      showToast('Login successful!', 'success');
-      navigate('/');
-    } catch (err) {
-      showToast(err.response?.data?.message || 'Login failed', 'danger');
-    } finally {
-      setLoading(false);
-    }
-  };
+const handleLogin = async (e) => {
+  e.preventDefault();
+  setLoading(true);
+  try {
+    const res = await API.post('/users/login', { email, password });
+    
+    // 👇 Pass token + user
+    login({ token: res.data.token, user: res.data.user });
+    
+    showToast('Login successful!', 'success');
+    navigate('/');
+  } catch (err) {
+    showToast(err.response?.data?.message || 'Login failed', 'danger');
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <Container className="d-flex justify-content-center align-items-center vh-100">
