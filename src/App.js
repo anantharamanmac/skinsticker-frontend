@@ -87,7 +87,7 @@ const App = () => {
     </AuthProvider>
   );
 };
-console.log('API URL:', process.env.REACT_APP_API_URL);
 
+console.log('Base URL:', API.defaults.baseURL);
 
 export default App;
