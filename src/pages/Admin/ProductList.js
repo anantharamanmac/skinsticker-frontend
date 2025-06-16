@@ -1,9 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import API from '../../services/api';
-import { Card, Button, Form, Container, Row, Col, Alert } from 'react-bootstrap';
+import { Card, Button, Form, Container, Row, Col } from 'react-bootstrap';
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([
+    'iPhone Case',
+    'Galaxy Case',
+    'Skin',
+    'Wallpaper',
+    'Sticker',
+    'OnePlus Case',
+    'Pixel Case',
+  ]);
   const [form, setForm] = useState({
     name: '',
     price: '',
@@ -105,9 +114,11 @@ const ProductList = () => {
                   required
                 >
                   <option value="">Select Category</option>
-                  <option value="skin">Skin</option>
-                  <option value="wallpaper">Wallpaper</option>
-                  <option value="sticker">Sticker</option>
+                  {categories.map((cat, idx) => (
+                    <option key={idx} value={cat.toLowerCase()}>
+                      {cat}
+                    </option>
+                  ))}
                 </Form.Select>
               </Col>
               <Col md={6}>
