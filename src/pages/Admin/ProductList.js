@@ -4,15 +4,6 @@ import { Card, Button, Form, Container, Row, Col } from 'react-bootstrap';
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
-  const [categories, setCategories] = useState([
-    'iPhone Case',
-    'Galaxy Case',
-    'Skin',
-    'Wallpaper',
-    'Sticker',
-    'OnePlus Case',
-    'Pixel Case',
-  ]);
   const [form, setForm] = useState({
     name: '',
     price: '',
@@ -21,9 +12,24 @@ const ProductList = () => {
   });
   const [editId, setEditId] = useState(null);
 
+  // Define categories with label + value (ensure these values match your backend!)
+  const categories = [
+    { label: 'Skin', value: 'skin' },
+    { label: 'Wallpaper', value: 'wallpaper' },
+    { label: 'Sticker', value: 'sticker' },
+    { label: 'iPhone Case', value: 'iphone_case' },
+    { label: 'Galaxy Case', value: 'galaxy_case' },
+    { label: 'OnePlus Case', value: 'oneplus_case' },
+    { label: 'Pixel Case', value: 'pixel_case' },
+  ];
+
   const fetchProducts = async () => {
-    const res = await API.get('/products');
-    setProducts(res.data);
+    try {
+      const res = await API.get('/products');
+      setProducts(res.data);
+    } catch (err) {
+      console.error('Error fetching products:', err);
+    }
   };
 
   useEffect(() => {
@@ -41,6 +47,7 @@ const ProductList = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const formData = new FormData();
     formData.append('name', form.name);
     formData.append('price', form.price);
@@ -57,7 +64,8 @@ const ProductList = () => {
       setForm({ name: '', price: '', category: '', image: null });
       fetchProducts();
     } catch (err) {
-      alert('Error saving product');
+      console.error('Error saving product:', err);
+      alert(`Error saving product: ${err.response?.data?.message || err.message}`);
     }
   };
 
@@ -73,8 +81,13 @@ const ProductList = () => {
 
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure?')) {
-      await API.delete(`/products/${id}`);
-      fetchProducts();
+      try {
+        await API.delete(`/products/${id}`);
+        fetchProducts();
+      } catch (err) {
+        console.error('Error deleting product:', err);
+        alert('Error deleting product');
+      }
     }
   };
 
@@ -115,8 +128,8 @@ const ProductList = () => {
                 >
                   <option value="">Select Category</option>
                   {categories.map((cat, idx) => (
-                    <option key={idx} value={cat.toLowerCase()}>
-                      {cat}
+                    <option key={idx} value={cat.value}>
+                      {cat.label}
                     </option>
                   ))}
                 </Form.Select>
@@ -152,7 +165,7 @@ const ProductList = () => {
               <Card.Body>
                 <Card.Title>{product.name}</Card.Title>
                 <Card.Text className="text-muted text-capitalize">
-                  Category: {product.category}
+                  Category: {product.category.replace('_', ' ')}
                 </Card.Text>
                 <Card.Text className="fw-bold text-success">₹{product.price}</Card.Text>
               </Card.Body>
