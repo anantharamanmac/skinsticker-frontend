@@ -55,9 +55,9 @@ const NavigationBar = () => {
                 {user?.isAdmin && (
                   <>
                     <NavDropdown.Item as={Link} to="/admin/dashboard">Admin Dashboard</NavDropdown.Item>
-                    <NavDropdown.Item as={Link} to="/admin/products">Manage Products</NavDropdown.Item>
+                    {/* <NavDropdown.Item as={Link} to="/admin/products">Manage Products</NavDropdown.Item>
                     <NavDropdown.Item as={Link} to="/admin/orders">Manage Orders</NavDropdown.Item>
-                    <NavDropdown.Item as={Link} to="/admin/users">Manage Users</NavDropdown.Item>
+                    <NavDropdown.Item as={Link} to="/admin/users">Manage Users</NavDropdown.Item> */}
                     <NavDropdown.Divider />
                   </>
                 )}
