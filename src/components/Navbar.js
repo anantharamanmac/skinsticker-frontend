@@ -28,7 +28,6 @@ const NavigationBar = () => {
         <Navbar.Toggle aria-controls="navbar-nav" />
         <Navbar.Collapse id="navbar-nav" className="justify-content-end">
           <Nav className="align-items-center">
-
             <Nav.Link as={Link} to="/">Home</Nav.Link>
 
             <Nav.Link as={Link} to="/cart" className="position-relative me-3">
@@ -52,19 +51,18 @@ const NavigationBar = () => {
                 </Button>
               </>
             ) : (
-              <>
+              <NavDropdown title={user.name || 'User'} align="end">
                 {user?.isAdmin && (
-                  <NavDropdown title="Admin" align="end" className="me-2">
-                    <NavDropdown.Item as={Link} to="/admin/dashboard">Dashboard</NavDropdown.Item>
-                    <NavDropdown.Item as={Link} to="/admin/products">Products</NavDropdown.Item>
-                    <NavDropdown.Item as={Link} to="/admin/orders">Orders</NavDropdown.Item>
-                    <NavDropdown.Item as={Link} to="/admin/users">Users</NavDropdown.Item>
-                  </NavDropdown>
+                  <>
+                    <NavDropdown.Item as={Link} to="/admin/dashboard">Admin Dashboard</NavDropdown.Item>
+                    <NavDropdown.Item as={Link} to="/admin/products">Manage Products</NavDropdown.Item>
+                    <NavDropdown.Item as={Link} to="/admin/orders">Manage Orders</NavDropdown.Item>
+                    <NavDropdown.Item as={Link} to="/admin/users">Manage Users</NavDropdown.Item>
+                    <NavDropdown.Divider />
+                  </>
                 )}
-                <NavDropdown title={user.name || 'User'} align="end">
-                  <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
-                </NavDropdown>
-              </>
+                <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
+              </NavDropdown>
             )}
           </Nav>
         </Navbar.Collapse>
