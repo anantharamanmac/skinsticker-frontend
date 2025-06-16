@@ -46,7 +46,7 @@ const AppContent = () => {
   const isAdmin = user?.isAdmin;
 
   if (maintenanceMode && !isAdmin) {
-    //return <Maintenance/>;
+    return <Maintenance/>;
   }
 
   return (
