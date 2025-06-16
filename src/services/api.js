@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-   baseURL:'https://backend-skinit.onrender.com/api', 
+   baseURL:'https://backend-skinit.onrender.com/api' || process.env.REACT_APP_URI , 
 });
 // || 'http://localhost:5000/api'
 // process.env.REACT_APP_API_URL ||

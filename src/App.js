@@ -88,6 +88,6 @@ const App = () => {
   );
 };
 
-console.log('Base URL:', API.defaults.baseURL);
+// console.log('Base URL:', API.defaults.baseURL);
 
 export default App;

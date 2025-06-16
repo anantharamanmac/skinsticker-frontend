@@ -1,7 +1,7 @@
 import { Card, Button, Badge } from 'react-bootstrap';
 import { useCart } from '../context/CartContext';
 import { useToast } from '../context/ToastContext';
-import './ProductCard.css'; // Add this line
+import './ProductCard.css';
 
 const ProductCard = ({ product }) => {
   const { addToCart } = useCart();
@@ -12,12 +12,15 @@ const ProductCard = ({ product }) => {
     showToast(`${product.name} added to cart!`, 'success');
   };
 
+  // 👇 Use your deployed backend URL
+  const imageBaseUrl = 'https://backend-skinit.onrender.com';
+
   return (
     <Card className="product-card h-100 border-0 shadow-sm rounded-4">
       <div className="image-container">
         <Card.Img
           variant="top"
-          src={`http://localhost:5000/${product.image}`}
+          src={`${imageBaseUrl}/${product.image}`}
           alt={product.name}
           className="product-image"
         />

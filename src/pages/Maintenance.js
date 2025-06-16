@@ -1,5 +1,5 @@
-// pages/Maintenance.js
 import React from 'react';
+import { Button } from 'react-bootstrap';
 
 const Maintenance = () => (
   <div style={{
@@ -15,6 +15,14 @@ const Maintenance = () => (
     <p style={{ fontSize: '1.2rem', color: '#666' }}>
       We are currently performing maintenance. Please check back soon.
     </p>
+
+    <Button 
+      variant="primary" 
+      style={{ marginTop: '20px' }}
+      onClick={() => window.location.reload()}
+    >
+      Refresh Page
+    </Button>
   </div>
 );
 
