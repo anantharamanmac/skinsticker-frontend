@@ -16,10 +16,11 @@ import OrderList from './pages/Admin/OrderList';
 
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
-import { ToastProvider } from './context/ToastContext'; 
+import { ToastProvider } from './context/ToastContext';
 import NavigationBar from './components/Navbar';
-import Maintenance from './pages/Maintenance'; // 👈 Add this
+import Maintenance from './pages/Maintenance';
 import API from './services/api';
+import { Spinner } from 'react-bootstrap'; // ✅ Import Spinner
 
 const AppContent = () => {
   const { user } = useAuth();
@@ -41,12 +42,20 @@ const AppContent = () => {
     fetchStatus();
   }, []);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) {
+    return (
+      <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
+        <Spinner animation="border" role="status" variant="primary">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      </div>
+    );
+  }
 
   const isAdmin = user?.isAdmin;
 
   if (maintenanceMode && !isAdmin) {
-    return <Maintenance/>;
+    return <Maintenance />;
   }
 
   return (
@@ -87,7 +96,5 @@ const App = () => {
     </AuthProvider>
   );
 };
-
-// console.log('Base URL:', API.defaults.baseURL);
 
 export default App;
