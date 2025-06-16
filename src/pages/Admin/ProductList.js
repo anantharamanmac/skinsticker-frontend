@@ -159,7 +159,7 @@ const ProductList = () => {
             <Card className="shadow-sm h-100">
               <Card.Img
                 variant="top"
-                src={`http://localhost:5000/${product.image}`}
+                src={`https://backend-skinit.onrender.com/${product.image}`}
                 style={{ height: '200px', objectFit: 'cover' }}
               />
               <Card.Body>
